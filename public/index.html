@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="/style.css" />
     <title>Url Shortner</title>
   </head>
   <body>
@@ -25,6 +25,23 @@
     </div>
 
     <script>
+      const API_BASE = "http://localhost:3001";
+
+      const fetchShortenedURL = async () => {
+        const response = await fetch(`${API_BASE}/links`);
+        const links = await response.json();
+
+        const list = document.getElementById("shortened-urls");
+        list.innerHTML = "";
+
+        for (const [shortCode, url] of Object.entries(links)) {
+          const li = document.createElement("li");
+          const truncateURL = url.length >= 30 ? `${url.slice(0, 30)}...` : url;
+          li.innerHTML = `<a href="${API_BASE}/${shortCode}" target="_blank">${window.location.origin}/${shortCode}</a> - ${truncateURL}`;
+          list.appendChild(li);
+        }
+      };
+
       document
         .getElementById("shorten-form")
         .addEventListener("submit", async (event) => {
@@ -33,17 +50,18 @@
           const formData = new FormData(event.target);
           const url = formData.get("url");
           const shortCode = formData.get("shortcode");
-          console.log(url, shortCode);
 
           try {
-            const response = await fetch("/shorten", {
+            const response = await fetch(`${API_BASE}/shorten`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ url, shortCode }),
             });
 
             if (response.ok) {
+              fetchShortenedURL();
               alert("Form submitted successfully");
+              event.target.reset(); 
             } else {
               const errorMessage = await response.text();
               alert(errorMessage);
@@ -52,6 +70,8 @@
             console.log(error);
           }
         });
+
+      fetchShortenedURL();
     </script>
   </body>
 </html>
