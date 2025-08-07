@@ -29,5 +29,3 @@ A minimal yet functional URL shortener built with Node.js and plain HTML/CSS/JS.
    git clone https://github.com/yourusername/url-shortener.git
    cd url-shortener
 
-**Running Script**
-  npm run dev
