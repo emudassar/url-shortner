@@ -2,20 +2,14 @@
   "name": "url-shortner",
   "version": "1.0.0",
   "main": "app.js",
+  "type": "module",
   "scripts": {
-    "dev": "node app.js",
-    "start": "node app.js"
+    "dev": "node --watch app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/emudassar/url-shortner.git"
-  },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/emudassar/url-shortner/issues"
-  },
-  "homepage": "https://github.com/emudassar/url-shortner#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
